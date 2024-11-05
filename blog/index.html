@@ -1,8 +1,75 @@
 <!DOCTYPE html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <title>PbCoder's blog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="file/style.css">
+    <title>PbCoder's Blog</title>
 </head>
 <body>
-  暂无
+
+<header>
+    <h1>欢迎来到我的博客</h1>
+</header>
+
+<div class="left">
+    <a href="#new">创建博客（仅限作者）</a>
+    <h2>我的博客</h2>
+    <div id="myBlogLinks"></div> <!-- 新增区域来放置博客链接 -->
+</div>
+<section>
+    <h1>置顶博客</h1>
+    <div id="pinnedPostsContainer"></div> <!-- 置顶博客区域 -->
+    <h1 id="blog">其余博客</h1>
+    <div id="postsContainer">
+        <!-- 动态添加的文章将插入到这里 -->
+    </div>
+</section>
+
+<div class="new">
+    <h2 id="New">创建新博客文章</h2>
+    <form>
+        <input type="text" id="postTitle" placeholder="文章标题" required>
+        <input type="password" id="password" placeholder="请输入密码" required>
+        <textarea id="postContent" rows="4" placeholder="输入文章内容" required></textarea>
+        <button type="button" onclick="addPost()">发布文章</button>
+    </form>
+</div>
+
+<!-- 删除模态窗口 -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+        <h3>输入密码以删除文章</h3>
+        <input type="password" id="deleteModalPassword" placeholder="输入密码" required>
+        <button id="deleteModalConfirmButton">确认删除</button>
+    </div>
+</div>
+
+<!-- 编辑模态窗口 -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('editModal')">&times;</span>
+        <h3>输入密码以修改文章</h3>
+        <input type="password" id="editModalPassword" placeholder="输入密码" required>
+        <textarea id="editModalContent" rows="4" placeholder="输入新的文章内容" required></textarea>
+        <button id="editModalConfirmButton">确认修改</button>
+    </div>
+</div>
+
+<!-- 置顶模态窗口 -->
+<div id="pinModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('pinModal')">&times;</span>
+        <h3>输入密码以置顶或取消置顶文章</h3>
+        <input type="password" id="pinModalPassword" placeholder="输入密码" required>
+        <button id="pinModalConfirmButton">确认置顶</button>
+    </div>
+</div>
+
+<footer>
+    by Pbcoder
+</footer>
+
 </body>
+</html>
