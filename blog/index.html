@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="file/style.css">
+    <link rel="stylesheet" href="file/Style.css">
     <link rel="icon" type="image/png" href="file/我的头像.jpg">
-    <title>PbCoder's Blog</title>
+    <title>PbCoder的博客</title>
 </head>
 <body>
 
@@ -13,63 +13,73 @@
     <h1>欢迎来到我的博客</h1>
 </header>
 
-<div class="left">
-    <a href="#New">创建博客（仅限作者）</a>
-    <h2>我的博客</h2>
-    <div id="myBlogLinks"></div> <!-- 新增区域来放置博客链接 -->
-</div>
-<section>
-    <h1>置顶博客</h1>
-    <div id="pinnedPostsContainer"></div> <!-- 置顶博客区域 -->
-    <h1 id="blog">其余博客</h1>
-    <div id="postsContainer">
-        <!-- 动态添加的文章将插入到这里 -->
+<div class="container">
+    <div class="left">
+        <a href="#NEW" style="color: #35424a; text-decoration: none; font-weight: bold;">创建新博客文章（仅限于PbCoder）</a>
     </div>
-</section>
 
-<div class="new">
-    <h2 id="New">创建新博客文章</h2>
-    <form>
-        <input type="text" id="postTitle" placeholder="文章标题" required>
-        <input type="password" id="password" placeholder="请输入密码" required>
-        <textarea id="postContent" rows="4" placeholder="输入文章内容" required></textarea>
-        <button type="button" onclick="addPost()">发布文章</button>
-    </form>
+    <div class="main-content">
+        <div class="postList">
+            <h2>已发布的文章</h2>
+            <section id="postsContainer"></section> <!-- 用于显示存储的文章 -->
+        </div>
+
+        <div class="newPost">
+            <h2 id="NEW">创建新博客文章</h2>
+            <form id="postForm">
+                <input type="text" id="postTitle" placeholder="文章标题" required>
+                <textarea id="postContent" rows="4" placeholder="输入文章内容" required></textarea>
+                <button type="button" onclick="openModal()">发布文章</button>
+                <div id="feedback" class="message"></div> <!-- 用于显示反馈信息 -->
+            </form>
+        </div>
+    </div>
 </div>
 
-<!-- 删除模态窗口 -->
-<div id="deleteModal" class="modal">
+<!-- 模态框 -->
+<div id="passwordModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('deleteModal')">&times;</span>
-        <h3>输入密码以删除文章</h3>
-        <input type="password" id="deleteModalPassword" placeholder="输入密码" required>
-        <button id="deleteModalConfirmButton">确认删除</button>
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>输入密码</h3>
+        <input type="password" id="modalPassword" placeholder="请输入密码" required>
+        <button onclick="submitForm()">确认</button>
     </div>
 </div>
 
-<!-- 编辑模态窗口 -->
+<!-- 内容模态框 -->
+<div id="contentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeContentModal()">&times;</span>
+        <h3>文章内容</h3>
+        <p id="modalArticleContent"></p>
+    </div>
+</div>
+
+<!-- 编辑模态框 -->
 <div id="editModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('editModal')">&times;</span>
-        <h3>输入密码以修改文章</h3>
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h3>修改文章</h3>
         <input type="password" id="editModalPassword" placeholder="输入密码" required>
         <textarea id="editModalContent" rows="4" placeholder="输入新的文章内容" required></textarea>
-        <button id="editModalConfirmButton">确认修改</button>
+        <button onclick="confirmEdit()">确认</button>
     </div>
 </div>
 
-<!-- 置顶模态窗口 -->
-<div id="pinModal" class="modal">
+<!-- 删除模态框 -->
+<div id="deleteModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('pinModal')">&times;</span>
-        <h3>输入密码以置顶或取消置顶文章</h3>
-        <input type="password" id="pinModalPassword" placeholder="输入密码" required>
-        <button id="pinModalConfirmButton">确认置顶</button>
+        <span class="close" onclick="closeDeleteModal()">&times;</span>
+        <h3>删除文章</h3>
+        <input type="password" id="deleteModalPassword" placeholder="输入密码" required>
+        <button onclick="confirmDelete()">确认删除</button>
     </div>
 </div>
 
 <footer>
-    by Pbcoder
+    v.1.0.0
+    <br>
+    by PbCoder
 </footer>
 
 <script src="file/Script.js"></script>
