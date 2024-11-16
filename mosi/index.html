@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摩斯密码</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #e8f5e9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 让body至少占满整个视口高度 */
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .container {
+            flex: 1; /* 让container占满剩余空间 */
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap; /* 保持换行格式 */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #fff;
+            opacity: 0.8;
+            background-color: #333;
+            padding: 10px 0; /* 增加上下内边距 */
+        }
+    </style>
+    <script>
+        const morseCode = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..', '1': '.----', '2': '..---', '3': '...--',
+            '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+            '9': '----.', '0': '-----', ' ': '/'
+        };
+
+        const morseDecode = Object.fromEntries(Object.entries(morseCode).map(([k, v]) => [v, k]));
+
+        function processText() {
+            const selectedOption = document.getElementById('actionSelect').value;
+            const inputText = document.getElementById('textInput').value.trim();
+            let result = '';
+
+            if (inputText === '') {
+                alert('输入不能为空，请输入有效的文本或摩斯密码');
+                return;
+            }
+
+            const lines = inputText.split('\n'); // 按行分割输入文本
+
+            if (selectedOption === 'encode') {
+                lines.forEach(line => {
+                    let lineResult = '';
+                    for (let char of line.toUpperCase()) {
+                        if (morseCode[char]) {
+                            lineResult += morseCode[char] + ' ';
+                        }
+                    }
+                    lineResult = lineResult.trim();
+                    if (lineResult === '') {
+                        alert('无效输入，请确认文本中包含可转换的字符');
+                    } else {
+                        result += lineResult + '\n'; // 添加换行到结果
+                    }
+                });
+                document.getElementById('output').textContent = result.trim() || '无有效输入';
+            } else if (selectedOption === 'decode') {
+                lines.forEach(line => {
+                    const morseChars = line.split(' ');
+                    for (let char of morseChars) {
+                        if (morseDecode[char]) {
+                            result += morseDecode[char]; // 正常解码
+                        } else {
+                            alert(`无效摩斯字符: ${char}`); // 如果摩斯密码不认识，则显示警告框
+                        }
+                    }
+                    result += '\n'; // 添加换行到结果
+                });
+                document.getElementById('output').textContent = result;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>摩斯密码转换器</h1>
+        <select id="actionSelect">
+            <option value="encode">文本转换为摩斯密码</option>
+            <option value="decode">摩斯密码转换为文本</option>
+        </select>
+        <textarea id="textInput" placeholder="输入您的文本或摩斯密码"></textarea>
+        <button onclick="processText()">转换</button>
+
+        <h2>结果：</h2>
+        <div id="output"></div>
+        <a href="table/index.html" target="_blank">摩斯密码表</a>
+    </div>
+    <footer>
+        by PbCoder
+    </footer>
+</body>
+</html>
